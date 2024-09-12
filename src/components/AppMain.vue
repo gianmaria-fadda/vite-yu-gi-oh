@@ -2,26 +2,21 @@
 export default {
   data() {
     return { 
-      message: 'Yu-Gi-Oh Api'
     }
   }
 }
 </script>
 
 <template>
-  <header>
-    <div class="container">
-      <h1>
-        {{ message }}
-      </h1>
-    </div>
-  </header>
+  <main>
+    
+  </main>
 </template>
 
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
 
-header {
-  padding: 20px 0;
+main {
+  
 }
 </style>
