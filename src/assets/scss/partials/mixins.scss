@@ -7,3 +7,11 @@
 @mixin default-bg-color {
     background-color: $mainColor;
 }
+
+@mixin padding-rule {
+    padding: 10px 0;
+}
+
+@mixin orange-bg {
+    background-color: #D48F38;
+}
