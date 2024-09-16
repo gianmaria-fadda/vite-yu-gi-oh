@@ -1,4 +1,5 @@
 <script>
+import SelectComponent from './SelectComponent.vue';
 import axios from 'axios';
 
 export default {
@@ -6,6 +7,10 @@ export default {
     return {
       allCard: []
     }
+  },
+  // 2) Dichiarazione del componente
+  components: {
+    SelectComponent
   },
   created() {
     axios
@@ -28,6 +33,9 @@ export default {
         </div>
       </div>
     </div>
+
+    <SelectComponent />
+
     <div class="container">
       <div class="row">
         <div v-for="(card, i) in allCard" :key="i" class="col-3">
