@@ -5,23 +5,50 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      allCard: []
+      allCard: [],
+      archetypes: [],
+      selectedArchetype: ''
     }
   },
   // 2) Dichiarazione del componente
   components: {
     SelectComponent
   },
+  computed: {
+    filteredCards() {
+      if (this.selectedArchetype) {
+        return this.allCard.filter(card => card.archetype === this.selectedArchetype);
+      }
+      return this.allCard;
+    }
+  },
+  methods: {
+    filterByArchetype(archetype) {
+      this.selectedArchetype = archetype;
+      this.fetchArchetypeCards(archetype);
+    },
+    fetchArchetypeCards(archetype) {
+      axios
+        .get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=${archetype}`)
+        .then((res) => {
+          this.allCard = res.data.data;
+        });
+    }
+  },
   created() {
     axios
       .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
-      .then((res)=> {
-        console.log(res.data.data);
-        
+      .then((res) => {
         this.allCard = res.data.data;
       });
+
+    axios
+      .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+      .then((res) => {
+        this.archetypes = res.data;
+      });
+    }
   }
-}
 </script>
 
 <template>
@@ -29,16 +56,16 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col text-start bg-dark text-white py-3">
-          Found {{ allCard.length }} cards
+          Found {{ filteredCards.length }} cards
         </div>
       </div>
     </div>
 
-    <SelectComponent />
+    <SelectComponent :archetypes="archetypes" @archetype-selected="filterByArchetype"/>
 
     <div class="container">
       <div class="row">
-        <div v-for="(card, i) in allCard" :key="i" class="col-3">
+        <div v-for="(card, i) in filteredCards" :key="i" class="col-3">
           <div>
             <img :src="card.card_images[0].image_url" :alt="card.name" class="w-100">
           </div>
