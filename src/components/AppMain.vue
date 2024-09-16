@@ -24,7 +24,7 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col text-start bg-dark text-white py-3">
-          Found x cards
+          Found {{ allCard.length }} cards
         </div>
       </div>
     </div>
